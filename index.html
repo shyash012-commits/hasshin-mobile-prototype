@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#0d1320">
+  <meta name="theme-color" content="#0a101b">
   <title>発進｜学校詳細ページ スマホ試作</title>
   <style>
     :root{
@@ -27,7 +27,7 @@
       font-size:16px;
     }
     *{box-sizing:border-box}
-    html{scroll-behavior:smooth;background:var(--bg)}
+    html{scroll-behavior:smooth;background:var(--nav-bg)}
     body{
       margin:0;
       background:
@@ -53,10 +53,10 @@
     .skip:focus{top:12px}
     .app-header{
       position:sticky;top:0;z-index:40;
-      height:58px;
+      height:calc(58px + var(--safe-top));
       display:flex;align-items:center;justify-content:space-between;
-      padding:0 18px;
-      background:rgba(10,16,27,.92);
+      padding:var(--safe-top) 18px 0;
+      background:var(--nav-bg);
       backdrop-filter:saturate(150%) blur(18px);
       border-bottom:1px solid rgba(42,53,72,.85);
     }
@@ -106,9 +106,8 @@
     .hero-overlay{
       position:absolute;
       z-index:1;
-      left:18px;
-      right:18px;
-      bottom:18px;
+      inset-inline:18px;
+      inset-block-end:18px;
     }
     .eyebrow{
       margin:0 0 8px;
@@ -120,14 +119,11 @@
     h1,h2,h3,p{overflow-wrap:anywhere}
     h1{
       font-size:clamp(2rem,8vw,2.8rem);
-      line-height:1.24;
+      line-height:1;
       margin:0;
+      padding:0;
       text-wrap:balance;
       text-shadow:0 2px 12px rgba(0,0,0,.60);
-      /* 文字の見える下端までのフォント内部余白を構造的に切る。
-         これで overlay の left:18px / bottom:18px が
-         左辺・下辺から「文字」まで同じ18pxとして効く。 */
-      text-box:trim-end ideographic-ink;
     }
     h2{font-size:1.55rem;line-height:1.35;margin:0}
     h3{font-size:1rem;line-height:1.5;margin:0 0 12px}
@@ -149,7 +145,7 @@
     }
     .hero-detail{margin-top:14px}
     .page-section{
-      scroll-margin-top:78px;
+      scroll-margin-top:calc(78px + var(--safe-top));
       padding:32px 18px 6px;
       border-top:1px solid rgba(42,53,72,.7);
     }
@@ -591,7 +587,7 @@
     <footer class="page-footer">
       <p>発進・学校詳細ページ スマホ試作</p>
       <p class="muted">表示内容はUI検証用です。</p>
-      <p class="build">2026-09-29 23:31</p>
+      <p class="build">2026-09-29 23:34</p>
     </footer>
   </main>
 
