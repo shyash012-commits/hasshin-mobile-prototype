@@ -30,9 +30,7 @@
     html{scroll-behavior:smooth;background:var(--nav-bg)}
     body{
       margin:0;
-      background:
-        radial-gradient(circle at 20% -10%, rgba(243,231,177,.08), transparent 32rem),
-        var(--bg);
+      background:var(--nav-bg);
       color:var(--text);
       line-height:1.72;
       min-height:100vh;
@@ -53,9 +51,9 @@
     .skip:focus{top:12px}
     .app-header{
       position:sticky;top:0;z-index:40;
-      height:calc(58px + var(--safe-top));
+      height:58px;
       display:flex;align-items:center;justify-content:space-between;
-      padding:var(--safe-top) 18px 0;
+      padding:0 18px;
       background:var(--nav-bg);
       backdrop-filter:saturate(150%) blur(18px);
       border-bottom:1px solid rgba(42,53,72,.85);
@@ -73,7 +71,14 @@
       appearance:none;border:0;background:transparent;color:var(--accent);
       width:42px;height:42px;border-radius:12px;font-size:20px;
     }
-    main{max-width:720px;margin:0 auto}
+    main{
+      max-width:720px;
+      margin:0 auto;
+      min-height:100vh;
+      background:
+        radial-gradient(circle at 20% -10%, rgba(243,231,177,.08), transparent 32rem),
+        var(--bg);
+    }
     .school-hero{padding:0 0 28px}
     .hero-visual{
       position:relative;
@@ -106,8 +111,9 @@
     .hero-overlay{
       position:absolute;
       z-index:1;
-      inset-inline:18px;
-      inset-block-end:18px;
+      left:18px;
+      right:18px;
+      bottom:18px;
     }
     .eyebrow{
       margin:0 0 8px;
@@ -145,7 +151,7 @@
     }
     .hero-detail{margin-top:14px}
     .page-section{
-      scroll-margin-top:calc(78px + var(--safe-top));
+      scroll-margin-top:78px;
       padding:32px 18px 6px;
       border-top:1px solid rgba(42,53,72,.7);
     }
@@ -587,7 +593,7 @@
     <footer class="page-footer">
       <p>発進・学校詳細ページ スマホ試作</p>
       <p class="muted">表示内容はUI検証用です。</p>
-      <p class="build">2026-09-29 23:34</p>
+      <p class="build">2026-09-29 23:44</p>
     </footer>
   </main>
 
