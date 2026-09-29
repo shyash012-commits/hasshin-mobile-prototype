@@ -543,7 +543,7 @@
     <footer class="page-footer">
       <p>発進・学校詳細ページ スマホ試作</p>
       <p class="muted">表示内容はUI検証用です。</p>
-      <p class="build">2026-09-29 22:24</p>
+      <p class="build">2026-09-29 22:42</p>
     </footer>
   </main>
 
@@ -598,7 +598,25 @@
       };
 
       let ticking = false;
+      let navJumpTarget = null;
+      let navJumpUnlockTimer = null;
+
+      const unlockNavJumpSoon = () => {
+        clearTimeout(navJumpUnlockTimer);
+        navJumpUnlockTimer = setTimeout(() => {
+          navJumpTarget = null;
+          syncNavToScroll();
+        }, 180);
+      };
+
       const syncNavToScroll = () => {
+        // ナビ操作によるスムーズスクロール中は、
+        // 通過中のセクションへ選択表示を移さない。
+        if (navJumpTarget) {
+          setActive(navJumpTarget);
+          return;
+        }
+
         if (ticking) return;
         ticking = true;
         requestAnimationFrame(() => {
@@ -608,15 +626,24 @@
         });
       };
 
-      // Safari / 埋め込みビュー向けに複数経路で追従。
-      window.addEventListener('scroll', syncNavToScroll, { passive: true });
-      document.addEventListener('scroll', syncNavToScroll, { passive: true, capture: true });
-      document.documentElement.addEventListener('scroll', syncNavToScroll, { passive: true });
-      document.body.addEventListener('scroll', syncNavToScroll, { passive: true });
+      const handleScroll = () => {
+        if (navJumpTarget) {
+          setActive(navJumpTarget);
+          unlockNavJumpSoon();
+          return;
+        }
+        syncNavToScroll();
+      };
+
+      // Safari向けに複数経路で追従。
+      window.addEventListener('scroll', handleScroll, { passive: true });
+      document.addEventListener('scroll', handleScroll, { passive: true, capture: true });
+      document.documentElement.addEventListener('scroll', handleScroll, { passive: true });
+      document.body.addEventListener('scroll', handleScroll, { passive: true });
       window.addEventListener('resize', syncNavToScroll, { passive: true });
 
       if (window.visualViewport) {
-        window.visualViewport.addEventListener('scroll', syncNavToScroll, { passive: true });
+        window.visualViewport.addEventListener('scroll', handleScroll, { passive: true });
         window.visualViewport.addEventListener('resize', syncNavToScroll, { passive: true });
       }
 
@@ -636,11 +663,20 @@
           const target = document.getElementById(link.dataset.target);
           if (!target) return;
 
-          // タップした瞬間に選択表示を切り替え、スクロール中も追従させる。
+          // タップした項目を選択状態に固定したまま目的地まで移動する。
+          navJumpTarget = target.id;
           setActive(target.id);
+
           const headerHeight = header?.offsetHeight || 0;
           const top = target.getBoundingClientRect().top + window.scrollY - headerHeight - 16;
           window.scrollTo({ top, behavior: 'smooth' });
+
+          // scrollイベントが発生しない環境向けの保険。
+          clearTimeout(navJumpUnlockTimer);
+          navJumpUnlockTimer = setTimeout(() => {
+            navJumpTarget = null;
+            syncNavToScroll();
+          }, 1400);
         });
       });
 
