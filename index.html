@@ -108,7 +108,7 @@
       z-index:1;
       left:18px;
       right:18px;
-      bottom:22px;
+      bottom:18px;
     }
     .eyebrow{
       margin:0 0 8px;
@@ -121,16 +121,21 @@
     h1{
       font-size:clamp(2rem,8vw,2.8rem);
       line-height:1.24;
-      margin:0 0 8px;
+      margin:0;
       text-wrap:balance;
       text-shadow:0 2px 12px rgba(0,0,0,.60);
+      /* 文字の見える下端までのフォント内部余白を構造的に切る。
+         これで overlay の left:18px / bottom:18px が
+         左辺・下辺から「文字」まで同じ18pxとして効く。 */
+      text-box:trim-end ideographic-ink;
     }
     h2{font-size:1.55rem;line-height:1.35;margin:0}
     h3{font-size:1rem;line-height:1.5;margin:0 0 12px}
     p{margin:0}
     .subtitle{
       color:#d6dfec;
-      font-size:1.08rem;
+      font-size:1.02rem;
+      margin-bottom:8px;
       text-shadow:0 1px 8px rgba(0,0,0,.55);
     }
     .hero-body{padding:18px 18px 0}
@@ -396,9 +401,8 @@
     <section class="school-hero" id="top" aria-labelledby="school-title">
       <div class="hero-visual" role="img" aria-label="学校写真の仮置き">
         <div class="hero-overlay">
-          <p class="eyebrow">学校詳細・スマホ試作</p>
-          <h1 id="school-title">東京都立 福生高等学校</h1>
           <p class="subtitle">全日制・普通科</p>
+          <h1 id="school-title">東京都立 福生高等学校</h1>
         </div>
       </div>
 
@@ -587,7 +591,7 @@
     <footer class="page-footer">
       <p>発進・学校詳細ページ スマホ試作</p>
       <p class="muted">表示内容はUI検証用です。</p>
-      <p class="build">2026-09-29 23:00</p>
+      <p class="build">2026-09-29 23:31</p>
     </footer>
   </main>
 
