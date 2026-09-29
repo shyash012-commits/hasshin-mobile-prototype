@@ -290,25 +290,6 @@
     .bottom-nav a.active i,
     .bottom-nav a[aria-current="page"] i{background:var(--moon);width:22px}
 
-    /* JS が実行されないプレビューでも、ナビをタップしたときだけは
-       :target を使って選択状態を動かすフォールバック。 */
-    body:not(:has(.page-section:target)) .bottom-nav a[data-target="environment"],
-    body:has(#environment:target) .bottom-nav a[data-target="environment"],
-    body:has(#course:target) .bottom-nav a[data-target="course"],
-    body:has(#consult:target) .bottom-nav a[data-target="consult"],
-    body:has(#foundation:target) .bottom-nav a[data-target="foundation"],
-    body:has(#conditions:target) .bottom-nav a[data-target="conditions"]{
-      color:var(--text);
-    }
-    body:not(:has(.page-section:target)) .bottom-nav a[data-target="environment"] i,
-    body:has(#environment:target) .bottom-nav a[data-target="environment"] i,
-    body:has(#course:target) .bottom-nav a[data-target="course"] i,
-    body:has(#consult:target) .bottom-nav a[data-target="consult"] i,
-    body:has(#foundation:target) .bottom-nav a[data-target="foundation"] i,
-    body:has(#conditions:target) .bottom-nav a[data-target="conditions"] i{
-      background:var(--moon);
-      width:22px;
-    }
     .bottom-nav a:active span{transform:translateY(-1px) scale(.96)}
 
     .toast{
@@ -562,7 +543,7 @@
     <footer class="page-footer">
       <p>発進・学校詳細ページ スマホ試作</p>
       <p class="muted">表示内容はUI検証用です。</p>
-      <p class="build">2026-09-29 20:55</p>
+      <p class="build">2026-09-29 22:24</p>
     </footer>
   </main>
 
@@ -595,6 +576,9 @@
           else link.removeAttribute('aria-current');
         });
       };
+
+      const jsStatus = document.getElementById('jsStatus');
+      if (jsStatus) jsStatus.textContent = 'JS: ON';
 
       const sectionAtReadingLine = () => {
         // 画面中央（50%ライン）にあるセクションを現在地として扱う。
