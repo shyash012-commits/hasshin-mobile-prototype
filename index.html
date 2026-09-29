@@ -21,6 +21,7 @@
       --warn:#ead9ad;
       --blue:#4775a5;
       --nav-h:60px;
+      --nav-bg:#0a101b;
       --safe-bottom:env(safe-area-inset-bottom,0px);
       font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
       font-size:16px;
@@ -73,36 +74,68 @@
       width:42px;height:42px;border-radius:12px;font-size:20px;
     }
     main{max-width:720px;margin:0 auto}
-    .school-hero{padding:24px 18px 28px}
-    .eyebrow{
-      margin:0 0 8px;
-      color:var(--muted);
-      font-size:12px;
-      letter-spacing:.08em;
-      text-transform:uppercase;
-    }
-    h1,h2,h3,p{overflow-wrap:anywhere}
-    h1{font-size:1.75rem;line-height:1.38;margin:0 0 6px}
-    h2{font-size:1.55rem;line-height:1.35;margin:0}
-    h3{font-size:1rem;line-height:1.5;margin:0 0 12px}
-    p{margin:0}
-    .subtitle{color:var(--muted);font-size:1rem}
-    .photo-placeholder{
-      margin-top:20px;
-      aspect-ratio:16/9;
-      border-radius:18px;
-      border:1px solid var(--line);
+    .school-hero{padding:0 0 28px}
+    .hero-visual{
+      position:relative;
+      min-height:clamp(300px,72vw,520px);
+      overflow:hidden;
+      border-bottom:1px solid var(--line);
       background:
-        linear-gradient(180deg, rgba(255,255,255,.05), transparent),
-        radial-gradient(circle at 70% 15%, rgba(243,231,177,.12), transparent 30%),
-        linear-gradient(135deg,#18243a,#0f1727);
-      display:grid;place-items:center;
+        radial-gradient(circle at 72% 18%, rgba(243,231,177,.12), transparent 28%),
+        linear-gradient(135deg,#1b2940,#0d1524 62%,#0a101b);
+    }
+    .hero-visual::before{
+      content:"学校写真";
+      position:absolute;
+      inset:0;
+      display:grid;
+      place-items:center;
       color:#d8e2f1;
       font-weight:700;
       letter-spacing:.08em;
+      opacity:.88;
     }
+    .hero-visual::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(180deg,rgba(4,8,15,.08) 0%,rgba(4,8,15,.10) 42%,rgba(4,8,15,.80) 78%,rgba(4,8,15,.96) 100%);
+      pointer-events:none;
+    }
+    .hero-overlay{
+      position:absolute;
+      z-index:1;
+      left:18px;
+      right:18px;
+      bottom:22px;
+    }
+    .eyebrow{
+      margin:0 0 8px;
+      color:#d6dfec;
+      font-size:12px;
+      letter-spacing:.08em;
+      text-shadow:0 1px 6px rgba(0,0,0,.55);
+    }
+    h1,h2,h3,p{overflow-wrap:anywhere}
+    h1{
+      font-size:clamp(2rem,8vw,2.8rem);
+      line-height:1.24;
+      margin:0 0 8px;
+      text-wrap:balance;
+      text-shadow:0 2px 12px rgba(0,0,0,.60);
+    }
+    h2{font-size:1.55rem;line-height:1.35;margin:0}
+    h3{font-size:1rem;line-height:1.5;margin:0 0 12px}
+    p{margin:0}
+    .subtitle{
+      color:#d6dfec;
+      font-size:1.08rem;
+      text-shadow:0 1px 8px rgba(0,0,0,.55);
+    }
+    .hero-body{padding:18px 18px 0}
     .lead{
-      margin-top:18px;
+      margin:0;
       padding:16px 17px;
       border:1px solid var(--line);
       background:linear-gradient(#192336,#141c2a);
@@ -259,9 +292,18 @@
       padding:0 8px var(--safe-bottom);
       display:grid;
       grid-template-columns:repeat(5,1fr);
-      background:rgba(10,16,27,.95);
+      background:var(--nav-bg);
       backdrop-filter:saturate(150%) blur(18px);
       border-top:1px solid rgba(42,53,72,.9);
+    }
+    .bottom-nav::after{
+      content:"";
+      position:absolute;
+      left:0;right:0;
+      bottom:calc(-1 * var(--safe-bottom));
+      height:var(--safe-bottom);
+      background:var(--nav-bg);
+      pointer-events:none;
     }
     .bottom-nav a{
       position:relative;
@@ -352,20 +394,22 @@
 
   <main id="main">
     <section class="school-hero" id="top" aria-labelledby="school-title">
-      <p class="eyebrow">学校詳細・スマホ試作</p>
-      <h1 id="school-title">東京都立 福生高等学校</h1>
-      <p class="subtitle">全日制・普通科</p>
-
-      <div class="photo-placeholder" role="img" aria-label="学校写真の仮置き">
-        <span>学校写真</span>
+      <div class="hero-visual" role="img" aria-label="学校写真の仮置き">
+        <div class="hero-overlay">
+          <p class="eyebrow">学校詳細・スマホ試作</p>
+          <h1 id="school-title">東京都立 福生高等学校</h1>
+          <p class="subtitle">全日制・普通科</p>
+        </div>
       </div>
 
-      <p class="lead">この画面は、学校詳細ページの情報設計と操作感を確認するための試作です。内容には表示例を含みます。</p>
+      <div class="hero-body">
+        <p class="lead">この画面は、学校詳細ページの情報設計と操作感を確認するための試作です。内容には表示例を含みます。</p>
 
-      <details class="hero-detail">
-        <summary>この学校について</summary>
-        <p>発進が確認した事実を、本人が学校生活を想像しやすい順に整理して表示する想定です。</p>
-      </details>
+        <details class="hero-detail">
+          <summary>この学校について</summary>
+          <p>発進が確認した事実を、本人が学校生活を想像しやすい順に整理して表示する想定です。</p>
+        </details>
+      </div>
     </section>
 
     <section class="page-section" id="environment" data-nav="環境">
@@ -543,7 +587,7 @@
     <footer class="page-footer">
       <p>発進・学校詳細ページ スマホ試作</p>
       <p class="muted">表示内容はUI検証用です。</p>
-      <p class="build">2026-09-29 22:42</p>
+      <p class="build">2026-09-29 23:00</p>
     </footer>
   </main>
 
